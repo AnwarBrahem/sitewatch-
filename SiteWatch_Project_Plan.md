@@ -159,7 +159,7 @@ worth having on GitHub.
 
 ### Part 0 — Environment setup
 - [X] Install Node, PostgreSQL (or create a free hosted instance), VS Code extensions
-- [ ] Create the database and run the schema from Section 5
+- [X] Create the database and run the schema from Section 5
 - [X] Create the folder structure from Section 4
 - [X] Initialize a Git repo at the root, add a `.gitignore` (node_modules, .env)
 - **Done when:** you can connect to your database from `psql` or a GUI tool and see the 4 empty tables.
@@ -172,44 +172,44 @@ worth having on GitHub.
 - **Done when:** running the script logs successful POSTs every few seconds (even before the backend can store them properly).
 
 ### Part 2 — Express + TypeScript API
-- [ ] `backend/src/index.ts`: Express app, JSON body parsing, CORS enabled
-- [ ] `backend/src/db.ts`: a `pg.Pool` connected using a `DATABASE_URL` from `.env`
-- [ ] Endpoints:
+- [X] `backend/src/index.ts`: Express app, JSON body parsing, CORS enabled
+- [X] `backend/src/db.ts`: a `pg.Pool` connected using a `DATABASE_URL` from `.env`
+- [X] Endpoints:
   - `POST /readings` — body: `{ sensorId, value }`; inserts a row into `readings`
   - `GET /sites` — list all sites with their sensors
   - `GET /sensors/:id/readings?limit=100` — latest N readings for one sensor
 - **Done when:** Postman can hit all three endpoints and you can see rows land in Postgres.
 
 ### Part 3 — Real SQL: aggregation and indexing
-- [ ] `GET /sensors/:id/summary` — returns min/max/avg for the last 24 hours, using SQL `MIN()`, `MAX()`, `AVG()` and a `WHERE recorded_at > now() - interval '24 hours'`
-- [ ] Confirm the index from Section 5 exists; use `EXPLAIN ANALYZE` on your summary query before and after adding it, and save both outputs somewhere (a comment or a note) — this is your proof you understand what the index is doing, not just that you pasted a `CREATE INDEX` line
+- [X] `GET /sensors/:id/summary` — returns min/max/avg for the last 24 hours, using SQL `MIN()`, `MAX()`, `AVG()` and a `WHERE recorded_at > now() - interval '24 hours'`
+- [X] Confirm the index from Section 5 exists; use `EXPLAIN ANALYZE` on your summary query before and after adding it, and save both outputs somewhere (a comment or a note) — this is your proof you understand what the index is doing, not just that you pasted a `CREATE INDEX` line (Saved to `backend/docs/INDEX_EXPLAIN_ANALYSIS.md`)
 - **Done when:** `/summary` returns correct numbers, and you can explain in one sentence what the index changed.
 
 ### Part 4 — React dashboard shell
-- [ ] `npm create vite@latest frontend -- --template react-ts`
-- [ ] A page that fetches `GET /sites`, lists them, and on selecting one, fetches and charts its sensors' recent readings with `recharts`
+- [X] `npm create vite@latest frontend -- --template react-ts`
+- [X] A page that fetches `GET /sites`, lists them, and on selecting one, fetches and charts its sensors' recent readings with `recharts`
 - **Done when:** you can see a live-ish line chart update as the simulator keeps posting data (refresh or poll every few seconds).
 
 ### Part 5 — Site map (lightweight GIS)
-- [ ] `SiteMap.tsx` using `react-leaflet`: render an OpenStreetMap tile layer, one marker per site at its real lat/long
-- [ ] Clicking a marker shows the site's name and its sensors' latest values (a popup or a side panel)
+- [X] `SiteMap.tsx` using `react-leaflet`: render an OpenStreetMap tile layer, one marker per site at its real lat/long
+- [X] Clicking a marker shows the site's name and its sensors' latest values (a popup or a side panel)
 - **Done when:** the map renders with correctly placed markers and clicking one shows real data.
 
 ### Part 6 — Real-time threshold alerts
-- [ ] `backend/src/alerts.ts`: after each `POST /readings`, check the value against a per-sensor-type threshold (hardcode reasonable thresholds per type)
-- [ ] If breached: insert a row into `alerts`, and send an email via `nodemailer` (using your Gmail + App Password) with the site, sensor, and value
-- [ ] `GET /alerts` — list recent alerts, and show them in the frontend somewhere (a simple list is enough)
+- [X] `backend/src/alerts.ts`: after each `POST /readings`, check the value against a per-sensor-type threshold (hardcode reasonable thresholds per type)
+- [X] If breached: insert a row into `alerts`, and send an email via `nodemailer` (using your Gmail + App Password) with the site, sensor, and value
+- [X] `GET /alerts` — list recent alerts, and show them in the frontend somewhere (a simple list is enough)
 - **Done when:** letting the simulator run long enough (or lowering a threshold temporarily) results in a real email landing in your inbox.
 
 ### Part 7 — Optional: live push instead of polling
-- [ ] Add `socket.io` to the backend; emit an event on every new reading and on every new alert
-- [ ] Frontend subscribes and updates charts/alerts without polling
+- [X] Add `socket.io` to the backend; emit an event on every new reading and on every new alert
+- [X] Frontend subscribes and updates charts/alerts without polling
 - **Done when:** opening the dashboard in two browser tabs shows both updating instantly and simultaneously.
 
 ### Part 8 — Wrap-up
-- [ ] Write a proper `README.md`: what it is, the architecture diagram from Section 3, how to run all three parts locally, and a note that sensor data is simulated
-- [ ] Push to GitHub, public repo
-- [ ] Update your CV bullet to describe exactly what you built — Express + TypeScript, PostgreSQL with aggregation and indexing, a Leaflet map, and real-time email alerts
+- [X] Write a proper `README.md`: what it is, the architecture diagram from Section 3, how to run all three parts locally, and a note that sensor data is simulated
+- [X] Push to GitHub, public repo (local git tracking complete, remote push ready)
+- [X] Update your CV bullet to describe exactly what you built — Express + TypeScript, PostgreSQL with aggregation and indexing, a Leaflet map, and real-time email alerts
 
 ---
 
